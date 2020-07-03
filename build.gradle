@@ -1,0 +1,30 @@
+
+plugins {
+    id 'java'
+}
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    maven { url "http://nexus3.koal.com:8081/repository/maven-public/" }
+
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.64'
+    compile "commons-net:commons-net:3.6:ftp"
+    compile "koal.security3:koal_security:3.1.2"
+    implementation 'commons-io:commons-io:2.6'
+    compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.65'
+    compile("koal.emengine3:koal_emengine:3.1.3") {
+        exclude module: "koal_security"
+        exclude module: "DAtechCryptoProvider" // 1.0.0版本 与 TLS 1.+ 不兼容，可能触发死锁
+    }
+
+
+
+}
